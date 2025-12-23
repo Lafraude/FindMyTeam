@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1766407243,
+    "userName": "Sacha Martin",
+    "isAdmin": "true"
+  },
+  {
+    "id": 17664072423,
+    "userName": "Zack Jefferson",
+    "isAdmin": "false"
+  }
+]

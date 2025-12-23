@@ -1,0 +1,41 @@
+:root {
+  /* Light Theme - Modern Mobile App */
+  --primary: #6366F1;
+  --surface: #FFFFFF;
+  --accent: #EC4899;
+  --muted: #64748B;
+  --text: #1E293B;
+  --text-transparency: rgba(30, 41, 59, 0.65);
+  --border: rgba(148, 163, 184, 0.15);
+  --shadow: 0 2px 16px rgba(99, 102, 241, 0.08);
+  --shadow-after: 0 4px 24px rgba(99, 102, 241, 0.12); 
+  --background-prcp: rgba(249, 250, 251, 0.96);   
+  --bg-cards1: rgba(241, 245, 249, 0.6);
+  --bg-cards2: rgba(226, 232, 240, 0.4);
+  --success: #14B8A6;
+  --error: #F43F5E;
+  --warning: #FB923C;
+}
+
+:root[data-theme="dark"] {
+  /* Dark Theme - Modern Mobile App */
+  --primary: #818CF8;
+  --surface: #0F172A;
+  --accent: #F472B6;
+  --muted: #94A3B8;
+  --text: #F8FAFC;
+  --text-transparency: rgba(248, 250, 252, 0.65);
+  --border: rgba(148, 163, 184, 0.12);
+  --shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  --shadow-after: 0 4px 24px rgba(0, 0, 0, 0.7);  
+  --background-prcp: rgba(15, 23, 42, 0.96); 
+  --bg-cards1: rgba(51, 65, 85, 0.4);
+  --bg-cards2: rgba(71, 85, 105, 0.3);
+  --success: #2DD4BF;
+  --error: #FB7185;
+  --warning: #FDBA74;
+}
+
+.FuzzyText {
+    color: var(--text);
+}

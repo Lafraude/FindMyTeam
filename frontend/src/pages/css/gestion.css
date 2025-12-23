@@ -1,0 +1,346 @@
+:root {
+  /* Light Theme - Modern Mobile App */
+  --primary: #6366F1;
+  --surface: #FFFFFF;
+  --accent: #EC4899;
+  --muted: #64748B;
+  --text: #1E293B;
+  --text-transparency: rgba(30, 41, 59, 0.65);
+  --border: rgba(148, 163, 184, 0.15);
+  --shadow: 0 2px 16px rgba(99, 102, 241, 0.08);
+  --shadow-after: 0 4px 24px rgba(99, 102, 241, 0.12); 
+  --background-prcp: rgba(249, 250, 251, 0.96);   
+  --bg-cards1: rgba(241, 245, 249, 0.6);
+  --bg-cards2: rgba(226, 232, 240, 0.4);
+  --success: #14B8A6;
+  --error: #F43F5E;
+  --warning: #FB923C;
+}
+
+:root[data-theme="dark"] {
+  /* Dark Theme - Modern Mobile App */
+  --primary: #818CF8;
+  --surface: #0F172A;
+  --accent: #F472B6;
+  --muted: #94A3B8;
+  --text: #F8FAFC;
+  --text-transparency: rgba(248, 250, 252, 0.65);
+  --border: rgba(148, 163, 184, 0.12);
+  --shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  --shadow-after: 0 4px 24px rgba(0, 0, 0, 0.7);  
+  --background-prcp: rgba(15, 23, 42, 0.96); 
+  --bg-cards1: rgba(51, 65, 85, 0.4);
+  --bg-cards2: rgba(71, 85, 105, 0.3);
+  --success: #2DD4BF;
+  --error: #FB7185;
+  --warning: #FDBA74;
+}
+
+@media (max-width: 480px) {
+    .container-prcp-gestion {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 20px 16px;
+        gap: 16px;
+    }
+
+    /* ========== GESTION EMPLOYÉS ========== */
+
+    .container-prcp-GE {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 20px;
+        background-color: var(--bg-cards1);
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .container-prcp-GE > h1 {
+        color: var(--text);
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+        letter-spacing: -0.3px;
+    }
+
+    .container-prcp-GE > ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .container-prcp-GE > ul > li {
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        align-items: center;
+        color: var(--text);
+        padding: 14px 16px;
+        background-color: var(--bg-cards2);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        gap: 20px;
+    }
+
+    .container-prcp-GE > ul > li:active {
+        transform: scale(0.98);
+    }
+
+    .container-prcp-GE > ul > li > button {
+        background-color: var(--error);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        width: 32px;
+        height: 32px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(244, 63, 94, 0.25);
+    }
+
+    .container-prcp-GEbutton:active {
+        transform: scale(0.9);
+    }
+
+    /* ========== AJOUTER EMPLOYÉ ========== */
+
+    .container-prcp-addEm {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 20px;
+        background-color: var(--bg-cards1);
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .container-prcp-addEm > h1 {
+        color: var(--text);
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+        letter-spacing: -0.3px;
+    }
+
+    .container-prcp-addEm > p {
+        color: var(--text-transparency);
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .container-prcp-addEm > input {
+        padding: 14px 16px;
+        border-radius: 12px;
+        color: var(--text);
+        background-color: var(--bg-cards2);
+        border: 1.5px solid var(--border);
+        outline: none;
+        font-size: 1rem;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .container-prcp-addEm > input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .container-prcp-addEm > input::placeholder {
+        color: var(--muted);
+    }
+
+    .container-prcp-addEm > button {
+        margin-top: 16px;
+        padding: 14px;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        background-color: var(--primary);
+        border: none;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    }
+
+    .container-prcp-addEm > button:active {
+        transform: scale(0.96);
+    }
+
+    .container-prcp-addEm select {
+        padding: 14px 16px;
+        border-radius: 12px;
+        color: var(--text);
+        background-color: var(--bg-cards2);
+        border: 1.5px solid var(--border);
+        margin-bottom: 16px;
+        cursor: pointer;
+        outline: none;
+        font-size: 1rem;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 10px;
+    }
+
+    .container-prcp-addEm > select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .container-prcp-addEm > select option {
+        color: var(--text);
+        background-color: var(--surface);
+    }
+
+    /* ========== AJOUTER Missions ========== */
+
+    .container-prcp-addM {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 20px;
+        background-color: var(--bg-cards1);
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .container-prcp-addM > h1 {
+        color: var(--text);
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        letter-spacing: -0.3px;
+    }
+
+    .container-prcp-addM > label {
+        color: var(--text);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        letter-spacing: 0.2px;
+    }
+
+    .container-prcp-addM > input {
+        padding: 14px 16px;
+        border-radius: 12px;
+        color: var(--text);
+        background-color: var(--bg-cards2);
+        border: 1.5px solid var(--border);
+        margin-bottom: 16px;
+        outline: none;
+        font-size: 1rem;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .container-prcp-addM > input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .container-prcp-addM > input::placeholder {
+        color: var(--muted);
+    }
+
+    .container-prcp-addM > button {
+        padding: 14px;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        background-color: var(--primary);
+        border: none;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+    }
+
+    .container-prcp-addM > button:active {
+        transform: scale(0.96);
+    }
+
+    .container-prcp-addM > select {
+        padding: 14px 16px;
+        border-radius: 12px;
+        color: var(--text);
+        background-color: var(--bg-cards2);
+        border: 1.5px solid var(--border);
+        margin-bottom: 16px;
+        cursor: pointer;
+        outline: none;
+        font-size: 1rem;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .container-prcp-addM > select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .container-prcp-addM > select option {
+        color: var(--text);
+        background-color: var(--surface);
+    }
+
+    .container-prcp-addM > ul {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .container-prcp-addM > ul > li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px;
+        background-color: var(--bg-cards2);
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-weight: 500;
+        transition: all 0.2s ease;
+        margin-bottom: 10px;
+    }
+
+    .container-prcp-addM > ul > li > button {
+        background-color: var(--error);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        width: 32px;
+        height: 32px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(244, 63, 94, 0.25);
+    }
+
+    .container-prcp-addM > ul > li > button:active {
+        transform: scale(0.9);
+    }
+}
