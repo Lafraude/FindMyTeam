@@ -9,7 +9,7 @@ import { MdOutlineSubscriptions } from 'react-icons/md';
 import { GoAlert } from 'react-icons/go';
 import { GiTeamDowngrade } from 'react-icons/gi';
 import { SiMyspace } from 'react-icons/si';
-import { div } from 'motion/react-client';
+
 
 const API = API_ADRESSE
 
@@ -51,6 +51,11 @@ function Home() {
     }
     
     const handleStatusChange = async (id: number, newStatus: string) => {
+        if (newStatus === "fini") {
+            setPopupMissionId(id);
+            return; 
+        }
+
         try {
             const res = await fetch(`${API}/missions/${id}`, {
                 method: "PUT",
@@ -60,32 +65,55 @@ function Home() {
                 },
                 body: JSON.stringify({ status: newStatus })
             });
+
             const result = await res.json();
-        
+
             if (!res.ok) {
                 alert(result.error);
                 return;
             }
-        
+
             setData(prev =>
                 prev.map(m => m.id === id ? { ...m, status: newStatus } : m)
             );
-        
-            if (newStatus === "fini") setPopupMissionId(id);
+
         } catch (err) {
             console.error(err);
         }
     };
 
+    const confirmFinish = async () => {
+        if (popupMissionId === null) return;
 
-    const confirmFinish = () => {
-        if (popupMissionId !== null) {
-            // Ici Appeler ton API pour confirmer la mission
-            // A faire
+        try {
+            const res = await fetch(`${API}/missions/${popupMissionId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": API_KEY
+                },
+                body: JSON.stringify({ status: "fini" })
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                alert(result.error);
+                return;
+            }
+
+            setData(prev =>
+                prev.map(m => m.id === popupMissionId ? { ...m, status: "fini" } : m)
+            );
+
             console.log("Mission confirmée :", popupMissionId);
+            setPopupMissionId(null);
+
+        } catch (err) {
+            console.error(err);
         }
-        setPopupMissionId(null);
     };
+
 
     const cancelFinish = () => setPopupMissionId(null);
 
@@ -96,10 +124,6 @@ function Home() {
     const loading = isLoading ? (
         <div className='container-prcp'><p className='loading-missions'>Chargement des missions...</p></div>
     ) : null;
-
-    // if (error) {
-    //     return <div className='container-prcp'><p className='error-missions'>Erreur: {error} <br />Contacter le support</p></div>
-    // }
 
     const ViewError = error ? (
         <div className='container-prcp'><p className='error-missions'>Erreur: {error} <br />Contacter le support</p></div>
@@ -204,8 +228,10 @@ function Home() {
                     <div className='container-popup-fini-prcp'>
                         <div className='container-popup-fini'>
                             <h1>Voulez-vous confirmer la fin de votre mission ?</h1>
-                            <button onClick={cancelFinish}>Non</button>
-                            <button onClick={confirmFinish}>Oui</button>
+                            <div>
+                                <button className='btn-popup-no' onClick={cancelFinish}>Non</button>
+                                <button className='btn-popup-yes' onClick={confirmFinish}>Oui</button>
+                            </div>
                         </div>
                     </div>
                 )}

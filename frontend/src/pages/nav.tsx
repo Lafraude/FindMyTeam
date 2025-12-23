@@ -7,13 +7,13 @@ const API = API_ADRESSE
 
 function Nav() {
     const location = useLocation();
-    const [theme, setTheme] = useState<string>('light');
+    const [theme, setTheme] = useState<string>('dark');
     const [ isAdmin, setIsAdmin ] = useState(false)
     const navRef = useRef<HTMLDivElement>(null);
     const userName = localStorage.getItem("UserLoggedInto")
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        const savedTheme = localStorage.getItem('theme') || 'dark';
         setTheme(savedTheme);
         if (savedTheme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');

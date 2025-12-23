@@ -1,24 +1,22 @@
 :root {
-  /* Light Theme - Modern Mobile App */
-  --primary: #6366F1;
-  --surface: #FFFFFF;
-  --accent: #EC4899;
-  --muted: #64748B;
-  --text: #1E293B;
-  --text-transparency: rgba(30, 41, 59, 0.65);
-  --border: rgba(148, 163, 184, 0.15);
-  --shadow: 0 2px 16px rgba(99, 102, 241, 0.08);
-  --shadow-after: 0 4px 24px rgba(99, 102, 241, 0.12); 
-  --background-prcp: rgba(249, 250, 251, 0.96);   
-  --bg-cards1: rgba(241, 245, 249, 0.6);
-  --bg-cards2: rgba(226, 232, 240, 0.4);
-  --success: #14B8A6;
-  --error: #F43F5E;
-  --warning: #FB923C;
+  --primary: #5B6FBF;
+  --surface: #B8BCC4;
+  --accent: #D4708C;
+  --muted: #6B7075;
+  --text: #1F2326;
+  --text-transparency: rgba(31, 35, 38, 0.65);
+  --border: rgba(107, 112, 117, 0.2);
+  --shadow: 0 2px 16px rgba(91, 111, 191, 0.08);
+  --shadow-after: 0 4px 24px rgba(91, 111, 191, 0.12); 
+  --background-prcp: rgba(184, 188, 196, 0.96);   
+  --bg-cards1: rgba(198, 202, 210, 0.7);
+  --bg-cards2: rgba(175, 180, 188, 0.6);
+  --success: #5A8A78;
+  --error: #B86666;
+  --warning: #C99563;
 }
 
 :root[data-theme="dark"] {
-  /* Dark Theme - Modern Mobile App */
   --primary: #818CF8;
   --surface: #0F172A;
   --accent: #F472B6;
@@ -380,5 +378,64 @@
     color: var(--text-transparency);
     margin: 0;
   }
+
+  .container-popup-fini-prcp {
+    position: fixed;       
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(20px);  
+    background-color: rgba(0, 0, 0, 0.3); 
+    z-index: 1000;
+  }
+
+  .container-popup-fini {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    gap: 12px;
+  }
+
+  .container-popup-fini > h1 {
+    color: var(--text);   
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+
+  .btn-popup-no,
+  .btn-popup-yes {
+    flex-direction: row;
+    margin: 14px;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: var(--shadow);
+  }
+
+  .btn-popup-no {
+    background-color: var(--error);
+    color: white;
+  }
+
+  .btn-popup-yes {
+    background-color: var(--success);
+    color: white;
+  }
+
 
 }

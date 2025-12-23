@@ -5,7 +5,7 @@ import './css/LoginPage.css'
 
 
 function LoginPage() {
-    const { user, isLoading, error, fetchUser } = useUserData(API_ADRESSE, API_KEY);
+    const { user, isLoading, error } = useUserData(API_ADRESSE, API_KEY);
 
     const addToLocalStorage = (u: any) => {
         if (localStorage.getItem("UserLoggedInto") === null) {
