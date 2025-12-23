@@ -1,6 +1,8 @@
 # FindMyTeam
 FindMyTeam est une application web full-stack qui aide les utilisateurs à trouver et gérer les collaborations d'équipe.
 
+## Projet en cours de création !
+
 ## 📁 Structure du Projet
 
 ### Frontend
@@ -52,11 +54,12 @@ Frontend et backend utilisent des fichiers `.env` pour la configuration environn
 
 **Frontend** (`.env`):
 ```
-VITE_API_URL=http://localhost:3000
+VITE_API_KEY=votreAPIkey
+VITE_API_URL=http://votreURL
 ```
 
 **Backend** (`.env`):
 ```
-PORT=3000
-NODE_ENV=development
+API_KEY=votreAPIkey
 ```
+
