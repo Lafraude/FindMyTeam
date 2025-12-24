@@ -179,7 +179,7 @@ function Gestion() {
 
                     <input type="text" name='addUser' id='addUser' placeholder='Prénom & Nom'/>
 
-                    <select name="isAdmin" id="isAdmin">
+                    <select name="isAdmin" id="isAdmin" aria-label="Statut admin ou non">
                         <option value="disable" disabled selected>Et-t-il admin ?</option>
                         <option value="true">Oui</option>
                         <option value="false">Non</option>
@@ -190,10 +190,10 @@ function Gestion() {
                     
                 </div>
 
-                <div className='container-prcp-addM' style={{marginBottom: "120px"}}>
+                <div className='container-prcp-addM' style={{marginBottom: "120px"}}> 
                     <h1>Ajouter des missions</h1>
 
-                    <select name="addMissions" id="addMissions">
+                    <select name="addMissions" id="addMissions" aria-label='addMissions'>
                         <option value="disable" disabled selected>Choisissez un employé</option>
                         <option value="option1">Mr. Jefferson</option>
                     </select>
