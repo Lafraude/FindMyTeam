@@ -33,13 +33,17 @@ function Home() {
             setIsLoading(true)
             const res = await fetch(`${API}/viewmissions`, {
                 method: "GET",
-                headers: { "x-api-key" : API_KEY },
+                // @ts-ignore
+                headers: { 
+                    "x-api-key": API_KEY,
+                    "x-username": localStorage.getItem("idLoggedTo")
+                },
             })
-            
+
             if (!res.ok) {
                 throw new Error(`Erreur HTTP: ${res.status}`)
             }
-            
+
             const result = await res.json()
             setData(result.missions)
         } catch (error) {
@@ -187,6 +191,7 @@ function Home() {
                     {ViewError}
 
                     {!isLoading && !error && (
+
                         isdata.length === 0 ? (
                             <p className='RAS-MISSIONS'>Aucune mission disponible</p>
                         ) : (

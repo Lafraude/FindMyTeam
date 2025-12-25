@@ -12,10 +12,12 @@ function LoginPage() {
             console.warn("UserLoggedInto non présent, création en cours...");
             localStorage.setItem("UserLoggedInto", "");
             localStorage.setItem("isConnected", "false");
+            localStorage.setItem("idLoggedTo", "")
             console.warn("Création Fini");
         }
 
         localStorage.setItem("UserLoggedInto", u.userName);
+        localStorage.setItem("idLoggedTo", u.id)
         localStorage.setItem("isConnected", "true");
 
         refreshPage();

@@ -116,9 +116,18 @@ app.post("/missionsAdd", authMiddleware, async (req, res) => {
 
 app.get("/viewmissions", authMiddleware, async (req, res) => {
     try {
+        const userName = req.headers["x-username"]; // Récupère l'utilisateur depuis le header
+        
+        if (!userName) {
+            return res.status(400).json({ error: "Utilisateur non identifié" });
+        }
+
         const fileData = await fs.readFile(PATH_ADD_MISSIONS, "utf8");
         const missions = JSON.parse(fileData || "[]");
-        res.json({ missions });
+        
+        const userMissions = missions.filter(mission => mission.employe_id === userName);
+        
+        res.json({ missions: userMissions });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Erreur serveur" });
@@ -157,6 +166,8 @@ app.put("/missions/:id", authMiddleware, async (req, res) => {
 app.delete("/missions/delete/:id", authMiddleware, async (req, res) => {
     
 })
+
+
 
 // -------------------- //// -------------------- //// -------------------- //
 // -------------------- //// -------------------- //// -------------------- //

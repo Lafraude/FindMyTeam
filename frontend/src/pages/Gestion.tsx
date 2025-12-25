@@ -4,7 +4,6 @@ import { API_ADRESSE, API_KEY, userName } from '../CONFIG/config';
 import './css/gestion.css'
 import { FiSettings } from 'react-icons/fi';
 import { callApiDeleteUser, useUserData } from '../script/LoginLogique';
-import { p } from 'motion/react-client';
 
 const API = API_ADRESSE
 
@@ -12,7 +11,6 @@ function Gestion() {
 
     const [addListObjectValueTempo, setAddListObjectValueTempo] = React.useState<string[]>([]);
     const { user, fetchUser, isLoading, error } = useUserData(API_ADRESSE, API_KEY);
-    const [addUser, setAddUser] = React.useState<string[]>([])
 
     // Ajouter quelque choses a la liste :
     const handleAddObjectToList = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -193,10 +191,24 @@ function Gestion() {
                 <div className='container-prcp-addM' style={{marginBottom: "120px"}}> 
                     <h1>Ajouter des missions</h1>
 
-                    <select name="addMissions" id="addMissions" aria-label='addMissions'>
-                        <option value="disable" disabled selected>Choisissez un employé</option>
-                        <option value="option1">Mr. Jefferson</option>
+                    <select name="addMissions" id="addMissions" aria-label="addMissions">
+                        <option value="disable" disabled selected>
+                            Choisissez un employé
+                        </option>
+                                    
+                        {error && (
+                            <option className="error-missions">
+                                Erreur: {error} — Contacter le support
+                            </option>
+                        )}
+                    
+                        {user && user.map((u: any, index: number) => (
+                            <option key={index} value={u.id}>
+                                {u.userName}
+                            </option>
+                        ))}
                     </select>
+
 
                     <input type="text" name="addListObject" id="addListObject" placeholder='Ajouter un produit...'/>
                     <button onClick={handleAddObjectToList}>Ajouter</button>
