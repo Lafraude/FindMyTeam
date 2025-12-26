@@ -80,9 +80,9 @@ app.use(express.json());
 // -------------------- //// -------------------- //// -------------------- //
 // -------------------- //// -------------------- //// -------------------- //
 
-app.get('/', authMiddleware, (req, res) => {
-    res.json({ message: 'Serveur actif', status: 'OK' });
-});
+// app.get('/', authMiddleware, (req, res) => {
+//     res.json({ message: 'Serveur actif', status: 'OK' });
+// });
 
 app.post("/missionsAdd", authMiddleware, async (req, res) => {
     const { employe_id, client_id, adresse_id, objects } = req.body;
@@ -125,7 +125,7 @@ app.get("/viewmissions", authMiddleware, async (req, res) => {
         const fileData = await fs.readFile(PATH_ADD_MISSIONS, "utf8");
         const missions = JSON.parse(fileData || "[]");
         
-        const userMissions = missions.filter(mission => mission.employe_id === userName);
+        const userMissions = missions.filter(mission => mission.employe_id === userName); // <= Système de filtre
         
         res.json({ missions: userMissions });
     } catch (err) {

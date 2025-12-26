@@ -414,6 +414,10 @@
     margin-bottom: 16px;
   }
 
+  .container-popup-fini-button {
+    display: flex;
+    flex-direction: row;
+  }
 
   .btn-popup-no,
   .btn-popup-yes {
@@ -437,5 +441,30 @@
     color: white;
   }
 
+  .container-filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-filter button {
+    background-color: unset;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    color: var(--text);
+
+    border-radius: 24px;
+    width: 200px;
+    height: 50px;
+    margin: 24px;
+    
+    transition: all 0.2s ease-in;
+  }
+
+  .container-filter button:active {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
 
 }
