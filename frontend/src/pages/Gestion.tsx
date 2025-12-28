@@ -1,14 +1,15 @@
 // @ts-ignore
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { API_ADRESSE, API_KEY, userName } from '../CONFIG/config';
-import './css/gestion.css'
 import { FiSettings } from 'react-icons/fi';
 import { callApiDeleteUser, useUserData } from '../script/LoginLogique';
+import { useNotification } from '../notif/notif';
+import './css/gestion.css';
 
-const API = API_ADRESSE
+const API = API_ADRESSE;
 
 function Gestion() {
-
+    const { addNotification } = useNotification();
     const [addListObjectValueTempo, setAddListObjectValueTempo] = React.useState<string[]>([]);
     const { user, fetchUser, isLoading, error } = useUserData(API_ADRESSE, API_KEY);
 
@@ -66,6 +67,15 @@ function Gestion() {
         const addAdresseValue = addAdresseEl.value.trim();
 
         if(!addClientValue || !addAdresseValue) return;
+        if(selectValue == "disable") {
+            addNotification({
+                type: 'error',
+                title: 'Informations incomplètes',
+                message: 'Merci de renseigner le nom de l\'employé à qui doit être attribuée la mission',
+                duration: 5000
+            })
+            return;
+        };
 
         if (localStorage.getItem("addUserMissions") !== null) {
             console.log("addUserMissions présent")
@@ -178,7 +188,7 @@ function Gestion() {
                     <input type="text" name='addUser' id='addUser' placeholder='Prénom & Nom'/>
 
                     <select name="isAdmin" id="isAdmin" aria-label="Statut admin ou non">
-                        <option value="disable" disabled selected>Et-t-il admin ?</option>
+                        <option value="disable" disabled selected>Est-t-il admin ?</option>
                         <option value="true">Oui</option>
                         <option value="false">Non</option>
                     </select>

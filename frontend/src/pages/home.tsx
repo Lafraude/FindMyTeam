@@ -9,8 +9,9 @@ import { MdOutlineSubscriptions } from 'react-icons/md';
 import { GoAlert } from 'react-icons/go';
 import { GiTeamDowngrade } from 'react-icons/gi';
 import { SiMyspace } from 'react-icons/si';
+import { useNotification } from '../notif/notif';
 
-const API = API_ADRESSE
+const API = API_ADRESSE;
 
 interface Mission {
   id: number
@@ -27,6 +28,7 @@ function Home() {
   const [error, setError] = useState<string | null>(null)
   const [popupMissionId, setPopupMissionId] = useState<number | null>(null)
   const [activeFilter, setActiveFilter] = useState<"attente" | "cours" | "fini">("attente")
+  const { addNotification } = useNotification();
 
   const dataMissions = async () => {
     try {
@@ -103,6 +105,13 @@ function Home() {
     )
 
     setPopupMissionId(null)
+
+    addNotification({
+      type: 'success',
+      title: 'Missions confirmé',
+      message: 'La mission a été confirmée avec succès, vous pouvez la retrouver dans le filtre "Fini"',
+      duration: 5000
+    })
   }
 
 
@@ -200,12 +209,13 @@ function Home() {
                     {mission.objects.map((obj, i) => (
                       <li key={i}>
                         - {obj}
-                        <input type="checkbox" />
+                        <input type="checkbox" placeholder='checkbox'/>
                       </li>
                     ))}
                   </ul>
 
                   <select
+                    aria-label='status'
                     value={mission.status ?? "attente"}
                     onChange={(e) =>
                       handleStatusChange(mission.id, e.target.value)
