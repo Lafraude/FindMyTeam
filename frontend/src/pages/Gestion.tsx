@@ -12,6 +12,7 @@ function Gestion() {
     const { addNotification } = useNotification();
     const [addListObjectValueTempo, setAddListObjectValueTempo] = React.useState<string[]>([]);
     const { user, fetchUser, isLoading, error } = useUserData(API_ADRESSE, API_KEY);
+    const id = Date.now() + Math.floor(Math.random() * 1000)
 
     // Ajouter quelque choses a la liste :
     const handleAddObjectToList = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -87,6 +88,7 @@ function Gestion() {
         }
 
         const dataToSendBackWoula = {
+            missions_id : id,
             employe_id : selectValue,                 
             client_id: addClientValue,               
             adresse_id: addAdresseValue,
@@ -94,7 +96,7 @@ function Gestion() {
         }
 
         try {
-            const response = await fetch(`${API}/missionsAdd`, {
+            const response = await fetch(`${API}/auth/creatework`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

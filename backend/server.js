@@ -42,11 +42,14 @@ app.use(cors({
 app.use(limiter);
 app.use(express.json());
 
+const authRoutes = require("./routes/auth.routes");
+app.use("/auth", authRoutes)
+
 // -------------------- //// -------------------- //// -------------------- //
 // -------------------- //// -------------------- //// -------------------- //
 // -------------------- //// -------------------- //// -------------------- //
 
-(async () => {
+;(async () => {
     try {
         await fs.mkdir("./data", { recursive: true });
         try {
@@ -61,7 +64,7 @@ app.use(express.json());
     }
 })();
 
-(async () => {
+;(async () => {
     try {
         await fs.mkdir("./data", { recursive: true });
         try {

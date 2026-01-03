@@ -25,7 +25,9 @@
     "client_id": "En cours",
     "adresse_id": "En cours",
     "objects": [
-      "En cours"
+      "En cours",
+      "test",
+      "aze"
     ],
     "status": "cours"
   }
