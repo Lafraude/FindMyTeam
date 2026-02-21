@@ -462,9 +462,9 @@
     transition: all 0.2s ease-in;
   }
 
-  .container-filter button:active {
-    transform: scale(0.9);
-    opacity: 0.7;
+  .container-filter button.active {
+      color: white; 
+      transform: scale(0.9);
   }
 
 }

@@ -1,68 +1,78 @@
-import { MdManageAccounts } from "react-icons/md";
-import { refreshPage, userName, API_ADRESSE, API_KEY } from "../CONFIG/config";
+import { MdManageAccounts } from 'react-icons/md';
+// @ts-ignore
+import { API_ADRESSE, API_KEY, refreshPage, userName } from '../CONFIG/config'
+import { useNotification } from '../notif/notif';
 import './css/mon-compte.css'
+import type React from 'react';
 
-function MyAccount() {
+function MyAccount () {
+    const { addNotification } = useNotification();
 
-    const testregistermysql = () => {
-        fetch(`${API_ADRESSE}/auth/register`, {method: "POST", headers: {
-            "Content-Type": "application/json",
-            "x-api-key" : API_KEY
-        },
-        body: JSON.stringify({username: "admin", email: "admin@admin.com", password: "admin"})})
-    };
+    const handlePseudo = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
 
-    const testloginmysql = () => {
-        fetch(`${API_ADRESSE}/auth/login`, {method: "POST", headers: {
-            "Content-Type": "application/json",
-            "x-api-key" : API_KEY
-        },
-        body: JSON.stringify({emailLogin: "admin@admin.com", passwordLogin: "admin"})})
-        .then(res => {
-          if (res.status === 200) {
-            return res.json();
-          } else {
-            throw new Error("Erreur de connexion");
-          }
+        const changePseudoEl = document.getElementById("pseudo") as HTMLInputElement;
+        const changePseudoValue = changePseudoEl.value.trim()
+
+        // Récup l'id users
+        const IdUserForPseudo = localStorage.getItem("UserLoggedIntoId")
+
+        if (!changePseudoValue) {
+            addNotification({
+                type: "warning",
+                title: "Champ vide",
+                message: "Veuillez fournir un pseudo",
+                duration: 3000
+            })
+        }
+        
+        console.log(changePseudoValue)
+
+        fetch(`${API_ADRESSE}/auth/pseudo/change`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key" : API_KEY
+            },
+
+            body: JSON.stringify({
+                pseudoChange: changePseudoValue,
+                IdForPseudo : IdUserForPseudo
+            })
         })
-        .then(data => {
-            console.log(data)
-        })
-        .catch(err => {
-            console.error(err.message)
-        })
-    };
+    }
 
     return (
-        <>  
+        <>
             <header className="landing-header">
                 <h1><MdManageAccounts/>Compte</h1>
                 <p>{userName}</p>
             </header>
-            <div className='container-my-acount-prcp'>
-                <div className='container-my-acount' style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
-                    <button
-                        onClick={() => {
-                            localStorage.setItem("isConnected", "false")
-                            refreshPage()
-                        }}
-                    >Se déconnecter
-                    </button>
 
-                    <button
-                        onClick={testregistermysql}
-                    >
-                        Test REGISTER MYSQL
-                    </button>
+            <div className='myacount-prcp'>
+                {/* ------------ */}
+                <p>Mon Pseudo {userName}</p>
+                <input id='pseudo' type="text" placeholder='Pseudo'/>
+                <button onClick={handlePseudo}>Ajouter</button>
+                {/* ------------ */}
+                
 
-                    <button
-                        onClick={testloginmysql}
-                    >
-                        Test LOGIN MYSQL
-                    </button>
-                </div>
+
+
+
+
+
+
+                <button
+                    onClick={() => {
+                        localStorage.setItem("isConnected", "false")
+                        refreshPage()
+                    }}
+                >Se déconnecter
+                </button>
+
             </div>
-        </> 
+        </>
     )
 }
 

@@ -1,18 +1,41 @@
 const express = require("express");
 const router = express.Router();
+
 const controller = require("../controllers/auth.controller");
+const register_router = require("../controllers/auth.register");
+const login_router = require("../controllers/auth.login");
+const viewuser = require("../controllers/auth.viewuser")
+const deleteUser = require("../controllers/auth.deleteUsers");
+const pseudo = require('../controllers/auth.pseudo')
+
 require('dotenv').config();
 
 const authMiddleware = (req, res, next) => {
     const apiKey = req.headers["x-api-key"];
+    
     if (!apiKey || apiKey !== process.env.API_KEY) {
-        return res.status(401).json({ error: "Accès refusé" });
+        return res.status(401).json({ error: "Accès refusé - API Key invalide" });
     }
+    
     next();
-}
+};
 
-router.post("/register", authMiddleware, controller.register);
-router.post("/login", authMiddleware, controller.login);
+router.post("/register", authMiddleware, register_router.register);
+
+router.post("/login", authMiddleware, login_router.login);
+
 router.post("/creatework", authMiddleware, controller.creatework);
+
+router.get("/getmissions", authMiddleware, controller.getMissions);
+
+router.put("/missions/:id", authMiddleware, controller.putMissions);
+
+router.get("/getadmin", authMiddleware, controller.getAdmin);
+
+router.post('/viewuser', authMiddleware, viewuser.viewuser);
+
+router.delete('/deleteuser/:userId', authMiddleware, deleteUser.deleteUser);
+
+router.post('/pseudo/change', authMiddleware, pseudo.pseudoChange)
 
 module.exports = router;

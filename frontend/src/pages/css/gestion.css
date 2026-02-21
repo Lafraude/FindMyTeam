@@ -66,7 +66,7 @@
         letter-spacing: -0.3px;
     }
 
-    .container-prcp-GE > ul {
+    .container-prcp-GE > div {
         list-style: none;
         padding: 0;
         margin: 0;
@@ -75,7 +75,7 @@
         margin-bottom: 20px;
     }
 
-    .container-prcp-GE > ul > li {
+    .container-prcp-GE > div > li {
         display: flex;
         flex-direction: row;
         justify-content: left;
@@ -91,11 +91,11 @@
         gap: 20px;
     }
 
-    .container-prcp-GE > ul > li:active {
+    .container-prcp-GE > div > li:active {
         transform: scale(0.98);
     }
 
-    .container-prcp-GE > ul > li > button {
+    .container-prcp-GE > div > li > button {
         background-color: var(--error);
         color: white;
         border: none;

@@ -1,3 +1,5 @@
+// Nav.tsx - VERSION CORRIGÉE
+
 import './css/nav.css'
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -8,10 +10,14 @@ const API = API_ADRESSE
 function Nav() {
     const location = useLocation();
     const [theme, setTheme] = useState<string>('dark');
-    const [ isAdmin, setIsAdmin ] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false); // État pour savoir si l'user est admin
+    const [isLoadingAdmin, setIsLoadingAdmin] = useState(true); // État de chargement
     const navRef = useRef<HTMLDivElement>(null);
-    const userName = localStorage.getItem("UserLoggedInto")
+    const userName = localStorage.getItem("UserLoggedInto");
 
+    // ========================================
+    // Gestion du thème
+    // ========================================
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') || 'dark';
         setTheme(savedTheme);
@@ -22,8 +28,10 @@ function Nav() {
         }
     }, []);
 
+    // ========================================
+    // Animation de l'indicateur de navigation
+    // ========================================
     useEffect(() => {
-        // Animation de l'indicateur de fond
         if (navRef.current) {
             const activeLink = navRef.current.querySelector('a.active') as HTMLElement;
             const navContainer = navRef.current;
@@ -38,6 +46,9 @@ function Nav() {
         }
     }, [location.pathname]);
     
+    // ========================================
+    // Toggle du thème clair/sombre
+    // ========================================
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
@@ -50,23 +61,47 @@ function Nav() {
         }
     };
 
-    // getAdmin
+    // ========================================
+    // ✅ CORRECTION : Vérifier si l'utilisateur est admin
+    // ========================================
     useEffect(() => {
-        fetch(`${API}/getadmin`, {
+        // Si pas connecté, pas besoin de vérifier
+        if (!isConnected || !userName) {
+            setIsLoadingAdmin(false);
+            return;
+        }
+
+        // Appel API pour vérifier le statut admin
+        fetch(`${API}/auth/getadmin`, { // ✅ ROUTE CORRIGÉE : /auth/getadmin
             headers: {
                 "x-username": userName,
                 "x-api-key": API_KEY
             }
         })
-            .then(res => res.json())
-            .then(data => {
-                setIsAdmin(data.isAdmin); // 🔥 LA LIGNE QUI MANQUAIT
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`Erreur ${res.status}`);
+                }
+                return res.json();
             })
-            .catch(err => console.error(err));
-    }, []);
-    
+            .then(data => {
+                setIsAdmin(data.isAdmin); // ✅ Mise à jour de l'état
+                console.log(`✅ Statut admin récupéré pour ${userName}: ${data.isAdmin}`);
+            })
+            .catch(err => {
+                console.error("❌ Erreur lors de la récupération du statut admin:", err);
+                setIsAdmin(false); // Par défaut, on considère que l'user n'est pas admin
+            })
+            .finally(() => {
+                setIsLoadingAdmin(false); // Fin du chargement
+            });
+    }, [userName]); // ✅ Dépendance sur userName pour recharger si changement
 
+    // ========================================
+    // Rendu de la navigation selon le statut
+    // ========================================
     const navAdmin = () => {
+        // Si pas connecté : afficher login
         if (!isConnected) {
             return (
                 <div className='nav-container-prcp'>
@@ -85,15 +120,37 @@ function Nav() {
             )
         }
 
+        // Si en cours de chargement du statut admin
+        if (isLoadingAdmin) {
+            return (
+                <div className='nav-container-prcp'>
+                    <div className='nav-container' ref={navRef}>
+                        <p>Chargement...</p>
+                    </div>
+                </div>
+            )
+        }
+
+        // Si admin : afficher toutes les options
         if (isAdmin) {
             return (
                 <div className='nav-container-prcp'>
                     <div className='nav-container' ref={navRef}>
-                        <Link to='/' className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-                        <Link to='/gestion' className={location.pathname === '/gestion' ? 'active' : ''}>Gestion</Link>
-                        <Link to='/mon-compte' className={location.pathname === '/mon-compte' ? 'active' : ''}>Compte</Link>
-                        <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>Carte</Link>
-                        <Link to='/chat' className={location.pathname === '/chat' ? 'active' : ''}>Chat</Link>
+                        <Link to='/' className={location.pathname === '/' ? 'active' : ''}>
+                            Home
+                        </Link>
+                        <Link to='/gestion' className={location.pathname === '/gestion' ? 'active' : ''}>
+                            Gestion
+                        </Link>
+                        <Link to='/mon-compte' className={location.pathname === '/mon-compte' ? 'active' : ''}>
+                            Compte
+                        </Link>
+                        <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>
+                            Carte
+                        </Link>
+                        <Link to='/chat' className={location.pathname === '/chat' ? 'active' : ''}>
+                            Chat
+                        </Link>
                         <button onClick={toggleTheme} className="theme-toggle">
                             {theme === 'light' ? '🌙' : '☀️'}
                         </button>
@@ -102,13 +159,22 @@ function Nav() {
             )
         }
 
+        // Si utilisateur normal (pas admin)
         return (
             <div className='nav-container-prcp'>
                 <div className='nav-container' ref={navRef}>
-                    <Link to='/' className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-                    <Link to='/mon-compte' className={location.pathname === '/mon-compte' ? 'active' : ''}>Compte</Link>
-                    <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>Carte</Link>
-                    <Link to='/chat' className={location.pathname === '/chat' ? 'active' : ''}>Chat</Link>
+                    <Link to='/' className={location.pathname === '/' ? 'active' : ''}>
+                        Home
+                    </Link>
+                    <Link to='/mon-compte' className={location.pathname === '/mon-compte' ? 'active' : ''}>
+                        Compte
+                    </Link>
+                    <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>
+                        Carte
+                    </Link>
+                    <Link to='/chat' className={location.pathname === '/chat' ? 'active' : ''}>
+                        Chat
+                    </Link>
                     <button onClick={toggleTheme} className="theme-toggle">
                         {theme === 'light' ? '🌙' : '☀️'}
                     </button>
@@ -116,8 +182,6 @@ function Nav() {
             </div>
         )
     }
-
-
 
     return (
         <>
