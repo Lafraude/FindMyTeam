@@ -271,7 +271,7 @@ function Gestion() {
             <div className='container-prcp-gestion'>
 
                 <div className='container-prcp-GE'>
-                    <h1>👥 Gestion des employés</h1>
+                    <h1>Gestion des employés</h1>
                     
                     {isLoading && !isSlow && (
                         <p className='loading-missions'>

@@ -7,7 +7,7 @@ import Gestion from "./pages/Gestion";
 import Carte from "./pages/Carte";
 import Chat from "./pages/Chat";
 import NotFound from "./Error/!notFound";
-import './index.css'
+import './index.css';
 import MyAccount from "./pages/mon-compte";
 import LoginPage from "./pages/loginPage";
 

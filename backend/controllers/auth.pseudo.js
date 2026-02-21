@@ -5,11 +5,14 @@ exports.pseudoChange = async (req, res) => {
 
     if (!pseudoChange || !IdForPseudo) {return res.status(400).json({message : "Tous les champs sont requis"})};
 
-    await pool.execute('UPDATE users SET pseudo = ? WHERE id = ?',
-        [pseudoChange, IdForPseudo]
-    )
-
-    // Crée les vérifs 
-
-    console.log("Good")
+    
+    try {
+        await pool.execute('UPDATE users SET pseudo = ? WHERE id = ?',
+            [pseudoChange, IdForPseudo]
+        );
+        return res.status(200).json({message : "Pseudo mis à jour avec succès"});
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({message : "Erreur Serveur"});
+    }
 }

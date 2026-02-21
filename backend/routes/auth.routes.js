@@ -6,7 +6,9 @@ const register_router = require("../controllers/auth.register");
 const login_router = require("../controllers/auth.login");
 const viewuser = require("../controllers/auth.viewuser")
 const deleteUser = require("../controllers/auth.deleteUsers");
-const pseudo = require('../controllers/auth.pseudo')
+const pseudo = require('../controllers/auth.pseudo');
+const userNameChange = require('../controllers/auth.username');
+const passwordModif = require('../controllers/auth.mdp');
 
 require('dotenv').config();
 
@@ -36,6 +38,10 @@ router.post('/viewuser', authMiddleware, viewuser.viewuser);
 
 router.delete('/deleteuser/:userId', authMiddleware, deleteUser.deleteUser);
 
-router.post('/pseudo/change', authMiddleware, pseudo.pseudoChange)
+router.post('/pseudo/change', authMiddleware, pseudo.pseudoChange);
+
+router.post('/user/change-name', authMiddleware, userNameChange.changeUserName);
+
+router.post('/mdp/modif', authMiddleware, passwordModif.passwordModif)
 
 module.exports = router;
