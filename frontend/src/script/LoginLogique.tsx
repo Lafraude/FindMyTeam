@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNotification } from '../notif/notif';
 
 interface User {
     id: string;
@@ -10,6 +11,7 @@ export function useUserData(API: string, API_KEY: string) {
     const [users, setUsers] = useState<User[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const { addNotification } = useNotification();
 
     const fetchUsers = async () => {
         setIsLoading(true);
@@ -46,13 +48,36 @@ export function useUserData(API: string, API_KEY: string) {
     };
 
     const deleteUser = async (userId: string) => {
+        const reqComingId = localStorage.getItem("UserLoggedIntoId")
+
         try {
             const response = await fetch(`${API}/auth/deleteuser/${userId}`, {
-                method: "DELETE",
-                headers: { "x-api-key": API_KEY }
+                method: "POST",
+                headers: {"Content-Type": "application/json", "x-api-key": API_KEY },
+                body: JSON.stringify({reqComingIdToBack : reqComingId})
             });
 
             const data = await response.json();
+
+            if (data.code === "01") {
+                addNotification({
+                    type: "error",
+                    title: "Erreur",
+                    message : data.message,
+                    duration : 5000 // 5s
+                })
+                return;
+            }
+
+            if(data.code === "02") {
+                addNotification({
+                    type: "error",
+                    title: "Erreur",
+                    message: data.message,
+                    duration : 5000
+                })
+                return;
+            }
 
             if (!response.ok) {
                 throw new Error(data.error || "Erreur suppression");

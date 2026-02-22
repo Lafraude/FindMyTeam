@@ -10,14 +10,11 @@ const API = API_ADRESSE
 function Nav() {
     const location = useLocation();
     const [theme, setTheme] = useState<string>('dark');
-    const [isAdmin, setIsAdmin] = useState(false); // État pour savoir si l'user est admin
-    const [isLoadingAdmin, setIsLoadingAdmin] = useState(true); // État de chargement
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isLoadingAdmin, setIsLoadingAdmin] = useState(true);
     const navRef = useRef<HTMLDivElement>(null);
     const userName = localStorage.getItem("UserLoggedInto");
 
-    // ========================================
-    // Gestion du thème
-    // ========================================
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') || 'dark';
         setTheme(savedTheme);
@@ -28,9 +25,6 @@ function Nav() {
         }
     }, []);
 
-    // ========================================
-    // Animation de l'indicateur de navigation
-    // ========================================
     useEffect(() => {
         if (navRef.current) {
             const activeLink = navRef.current.querySelector('a.active') as HTMLElement;
@@ -46,9 +40,6 @@ function Nav() {
         }
     }, [location.pathname]);
     
-    // ========================================
-    // Toggle du thème clair/sombre
-    // ========================================
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
@@ -61,18 +52,13 @@ function Nav() {
         }
     };
 
-    // ========================================
-    // ✅ CORRECTION : Vérifier si l'utilisateur est admin
-    // ========================================
     useEffect(() => {
-        // Si pas connecté, pas besoin de vérifier
         if (!isConnected || !userName) {
             setIsLoadingAdmin(false);
             return;
         }
 
-        // Appel API pour vérifier le statut admin
-        fetch(`${API}/auth/getadmin`, { // ✅ ROUTE CORRIGÉE : /auth/getadmin
+        fetch(`${API}/auth/getadmin`, {
             headers: {
                 "x-username": userName,
                 "x-api-key": API_KEY
@@ -85,23 +71,19 @@ function Nav() {
                 return res.json();
             })
             .then(data => {
-                setIsAdmin(data.isAdmin); // ✅ Mise à jour de l'état
-                console.log(`✅ Statut admin récupéré pour ${userName}: ${data.isAdmin}`);
+                setIsAdmin(data.isAdmin);
+                console.log(`- Statut admin récupéré pour ${userName}: ${data.isAdmin}`);
             })
             .catch(err => {
-                console.error("❌ Erreur lors de la récupération du statut admin:", err);
-                setIsAdmin(false); // Par défaut, on considère que l'user n'est pas admin
+                console.error("- Erreur lors de la récupération du statut admin:", err);
+                setIsAdmin(false);
             })
             .finally(() => {
-                setIsLoadingAdmin(false); // Fin du chargement
+                setIsLoadingAdmin(false);
             });
-    }, [userName]); // ✅ Dépendance sur userName pour recharger si changement
+    }, [userName]);
 
-    // ========================================
-    // Rendu de la navigation selon le statut
-    // ========================================
     const navAdmin = () => {
-        // Si pas connecté : afficher login
         if (!isConnected) {
             return (
                 <div className='nav-container-prcp'>
@@ -112,15 +94,14 @@ function Nav() {
                         <Link to='/login' className={location.pathname === '/login' ? 'active' : ''}>
                             Connexion
                         </Link>
-                        <button onClick={toggleTheme} className="theme-toggle">
+                        {/* <button onClick={toggleTheme} className="theme-toggle">
                             {theme === 'light' ? '🌙' : '☀️'}
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             )
         }
 
-        // Si en cours de chargement du statut admin
         if (isLoadingAdmin) {
             return (
                 <div className='nav-container-prcp'>
@@ -131,7 +112,6 @@ function Nav() {
             )
         }
 
-        // Si admin : afficher toutes les options
         if (isAdmin) {
             return (
                 <div className='nav-container-prcp'>
@@ -145,21 +125,20 @@ function Nav() {
                         <Link to='/mon-compte' className={location.pathname === '/mon-compte' ? 'active' : ''}>
                             Compte
                         </Link>
-                        <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>
+                        {/* <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>
                             Carte
-                        </Link>
+                        </Link> */}
                         <Link to='/chat' className={location.pathname === '/chat' ? 'active' : ''}>
                             Chat
                         </Link>
-                        <button onClick={toggleTheme} className="theme-toggle">
+                        {/* <button onClick={toggleTheme} className="theme-toggle">
                             {theme === 'light' ? '🌙' : '☀️'}
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             )
         }
 
-        // Si utilisateur normal (pas admin)
         return (
             <div className='nav-container-prcp'>
                 <div className='nav-container' ref={navRef}>
@@ -169,15 +148,15 @@ function Nav() {
                     <Link to='/mon-compte' className={location.pathname === '/mon-compte' ? 'active' : ''}>
                         Compte
                     </Link>
-                    <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>
+                    {/* <Link to='/carte' className={location.pathname === '/carte' ? 'active' : ''}>
                         Carte
-                    </Link>
+                    </Link> */}
                     <Link to='/chat' className={location.pathname === '/chat' ? 'active' : ''}>
                         Chat
                     </Link>
-                    <button onClick={toggleTheme} className="theme-toggle">
+                    {/* <button onClick={toggleTheme} className="theme-toggle">
                         {theme === 'light' ? '🌙' : '☀️'}
-                    </button>
+                    </button> */}
                 </div>
             </div>
         )

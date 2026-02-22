@@ -95,7 +95,7 @@ function LoginPage() {
     return (
         <>
             <header className="landing-header-login-page">
-                <h1>Choisissez votre profil correspondant</h1>
+                <h1>Page de connexion</h1>
             </header>
 
             <div className='container-prcp'>

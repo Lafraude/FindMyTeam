@@ -207,7 +207,7 @@ function Gestion() {
                 body: JSON.stringify({
                     username: addUserValue,
                     password: addMdpValue,
-                    isAdmin: addIsAdminValue === "true",
+                    isAdmin: addIsAdminValue,
                     pseudo : addUserValue
                 })
             });
@@ -234,7 +234,7 @@ function Gestion() {
             fetchUsers();
 
         } catch (error: any) {
-            console.error("❌ Erreur handleAddUser:", error);
+            console.error("- Erreur handleAddUser:", error);
             
             addNotification({
                 type: 'error',

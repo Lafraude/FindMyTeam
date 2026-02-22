@@ -197,8 +197,6 @@ function MyAccount () {
                     <button onClick={handleMdpModif}>Modifier</button>
                 </div>
 
-
-
                 <button className='loagout-btn'
                     onClick={() => {
                         localStorage.clear()

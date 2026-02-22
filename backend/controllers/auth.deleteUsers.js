@@ -3,6 +3,26 @@ const pool = require('../config/db');
 exports.deleteUser = async (req, res) => {
     try {
         const { userId } = req.params;
+        const { reqComingIdToBack } = req.body;
+
+        const [rows] = await pool.execute(
+            'SELECT * FROM users isAdmin WHERE id = ? ',
+            [reqComingIdToBack]
+        )
+
+        const isAdmin = rows[0]
+
+        if (isAdmin.id === parseInt(userId)) {
+            return res.status(400).json({ code: "01", message: "Impossible de se supprimer soi-même" });
+        }
+
+        if (isAdmin.id > userId) {
+            return res.status(400).json({ code: "02", message: "Impossible de supprimer une personne plus haut que vous."})
+        }
+
+        if (isAdmin.isAdmin !== 1) {
+            return res.status(403).json({ error: "Accès interdit" });
+        }
 
         if (!userId) {
             return res.status(400).json({ error: "ID utilisateur manquant" });

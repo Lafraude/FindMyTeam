@@ -64,7 +64,7 @@ function Home() {
 
     } catch (err: any) {
       setError(err.message || "Erreur lors du chargement des missions")
-      console.error("❌ Erreur dataMissions:", err)
+      console.error("- Erreur dataMissions:", err)
       
       addNotification({
         type: 'error',
@@ -120,7 +120,7 @@ function Home() {
       })
 
     } catch (err: any) {
-      console.error("❌ Erreur handleStatusChange:", err)
+      console.error("- Erreur handleStatusChange:", err)
       
       addNotification({
         type: 'error',

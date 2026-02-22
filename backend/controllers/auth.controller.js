@@ -70,7 +70,7 @@ exports.creatework = async (req, res) => {
     });
 
   } catch (err) {
-    console.error("❌ Erreur creatework:", err);
+    console.error("- Erreur creatework:", err);
     
     // Gestion des erreurs de clés dupliquées
     if (err.code === 'ER_DUP_ENTRY') {
@@ -151,14 +151,12 @@ exports.putMissions = async (req, res) => {
       return res.status(404).json({ error: "Mission non trouvée" });
     }
 
-    // Empêcher la modification d'une mission déjà terminée
     if (rows[0].status === "fini") {
       return res.status(400).json({ 
         error: "Impossible de modifier une mission déjà terminée" 
       });
     }
 
-    // Mettre à jour le statut
     await pool.execute(
       "UPDATE missions SET status = ? WHERE missions_id = ?",
       [status, id]
@@ -185,18 +183,15 @@ exports.getAdmin = async (req, res) => {
       return res.json({ isAdmin: false });
     }
 
-    // Requête pour récupérer l'utilisateur
     const [rows] = await pool.execute(
       "SELECT isAdmin FROM users WHERE username = ? LIMIT 1",
       [userName]
     );
 
-    // Si l'utilisateur n'existe pas
     if (rows.length === 0) {
       return res.json({ isAdmin: false });
     }
 
-    // Retourner le statut admin (converti en boolean)
     const user = rows[0];
     const isAdmin = user.isAdmin === 1 || user.isAdmin === true;
 
@@ -205,7 +200,7 @@ exports.getAdmin = async (req, res) => {
     return res.json({ isAdmin });
 
   } catch (err) {
-    console.error("❌ Erreur getAdmin:", err);
+    console.error("- Erreur getAdmin:", err);
     return res.status(500).json({ error: "Erreur serveur" });
   }
 };
