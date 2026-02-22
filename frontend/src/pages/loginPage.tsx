@@ -1,7 +1,6 @@
 import { API_ADRESSE, API_KEY, refreshPage } from '../CONFIG/config';
 import { useUserData } from '../script/LoginLogique';
 import { useNotification } from '../notif/notif';
-
 import './css/LoginPage.css'
 
 function LoginPage() {

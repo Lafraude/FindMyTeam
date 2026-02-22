@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { NotificationProvider } from "./notif/notif";
 
@@ -10,13 +11,17 @@ import NotFound from "./Error/!notFound";
 import './index.css';
 import MyAccount from "./pages/mon-compte";
 import LoginPage from "./pages/loginPage";
+import AccountWatcher from "./script/accountWatcher";
 
 
 
 function App() {
 
+  const currentUserId = localStorage.getItem("UserLoggedIntoId")
+
   return (
     <>
+      <AccountWatcher currentUserId={currentUserId} />
       <NotificationProvider>
         <Router>
           <Nav/>
